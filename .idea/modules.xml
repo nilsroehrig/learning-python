@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/python-beginners-course/python-beginners-course.iml" filepath="$PROJECT_DIR$/python-beginners-course/python-beginners-course.iml" />
-      <module fileurl="file://$PROJECT_DIR$/python-one-project-yt/python-one-project-yt.iml" filepath="$PROJECT_DIR$/python-one-project-yt/python-one-project-yt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/slot-machine/slot-machine.iml" filepath="$PROJECT_DIR$/slot-machine/slot-machine.iml" />
     </modules>
   </component>
 </project>
