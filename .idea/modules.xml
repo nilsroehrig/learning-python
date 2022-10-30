@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/banking-system/untitled/banking-system.iml" filepath="$PROJECT_DIR$/banking-system/untitled/banking-system.iml" />
       <module fileurl="file://$PROJECT_DIR$/python-beginners-course/python-beginners-course.iml" filepath="$PROJECT_DIR$/python-beginners-course/python-beginners-course.iml" />
       <module fileurl="file://$PROJECT_DIR$/slot-machine/slot-machine.iml" filepath="$PROJECT_DIR$/slot-machine/slot-machine.iml" />
     </modules>
