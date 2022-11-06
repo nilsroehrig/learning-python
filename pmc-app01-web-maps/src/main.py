@@ -4,20 +4,32 @@ import pandas
 folium_map = folium.Map(location=(41.08961985883916, -112.0000093626548), zoom_start=5, tiles="Stamen Terrain")
 
 volcanoes = pandas.read_csv("../materials/Volcanoes.txt")
-
-feature_group = folium.FeatureGroup(name="Bunch of Markers")
 volcano_colors = {}
 color_options = sorted(folium.Icon.color_options)
 
-for index, volcano in volcanoes.iterrows():
-    volcano_type = volcano["TYPE"]
+feature_group = folium.FeatureGroup(name="Bunch of Markers")
 
-    if volcano_type not in volcano_colors.keys():
-        volcano_colors[volcano_type] = color_options.pop(0)
+template = """
+<h5>Volcano&nbsp;Information</h5>
+Name:&nbsp;<strong>%s</strong><br>
+Elevation&nbsp;<strong>%s m</strong><br>
+Type:&nbsp;<strong>%s</strong><br><br>
+<a target="_blank" href="https://duckduckgo.com/?q=%s">Search on DDG</a>
+"""
+
+for index, volcano in volcanoes.iterrows():
+    name = volcano["NAME"]
+    elevation = volcano["ELEV"]
+    v_type = volcano["TYPE"]
+    location = (volcano["LAT"], volcano["LON"])
+
+    if v_type not in volcano_colors.keys():
+        volcano_colors[v_type] = color_options.pop(0)
 
     feature_group.add_child(
-        folium.Marker((volcano["LAT"], volcano["LON"]), f"{volcano['NAME']}\n{volcano_type}",
-                      icon=folium.Icon(color=volcano_colors[volcano_type])))
+        folium.Marker(location=location,
+                      popup=template % (name, elevation, v_type, name),
+                      icon=folium.Icon(color=volcano_colors[v_type])))
 
 folium_map.add_child(feature_group)
 
