@@ -1,36 +1,21 @@
 def make_sentence(phrase):
-    punctuation = "."
-
-    if is_question(phrase):
-        punctuation = "?"
-
+    punctuation = "?" if is_question(phrase) else "."
     return phrase.capitalize() + punctuation
 
 
 def is_question(phrase):
-    if first_word_of(phrase.lower()) in ["how", "where", "what", "when", "why", "who"]:
-        return True
-
-    return False
+    return phrase.lower().startswith(("how", "where", "what", "when", "why", "who"))
 
 
-def first_word_of(phrase):
-    return phrase.split(" ")[0]
+text = ""
+inputs = []
 
+while text != "/end":
+    text = input("Say something: ")
 
-def main():
-    text = ""
-    inputs = []
+    if text == "/end":
+        break
 
-    while text != "/end":
-        text = input("Say something: ")
+    inputs.append(make_sentence(text))
 
-        if text == "/end":
-            break
-
-        inputs.append(make_sentence(text))
-
-    print(" ".join(inputs))
-
-
-main()
+print(" ".join(inputs))
