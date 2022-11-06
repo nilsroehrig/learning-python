@@ -28,6 +28,21 @@ def get_volcano_color(volcano_type):
     return volcano_colors[volcano_type]
 
 
+def population_color(population_count):
+    color = "red"
+
+    if population_count < 5000000:
+        color = "blue"
+    elif population_count < 20000000:
+        color = "green"
+    elif population_count < 50000000:
+        color = "yellow"
+    elif population_count < 200000000:
+        color = "orange"
+
+    return color
+
+
 for index, volcano in volcanoes.iterrows():
     name = volcano["NAME"]
     elevation = volcano["ELEV"]
@@ -47,7 +62,11 @@ for index, volcano in volcanoes.iterrows():
 population = folium.FeatureGroup(name="Population")
 
 with open("../materials/world.json", mode="r", encoding="utf-8-sig") as world:
-    population.add_child(folium.GeoJson(world.read()))
+    population.add_child(folium.GeoJson(
+        world.read(),
+        style_function=lambda c: {
+            "fillColor": population_color(c["properties"]["POP2005"])
+        }))
 
 folium_map.add_child(population)
 folium_map.add_child(volcano_markers)
