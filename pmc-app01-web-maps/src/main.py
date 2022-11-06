@@ -3,8 +3,7 @@ import pandas
 
 folium_map = folium.Map(location=(41.08961985883916, -112.0000093626548), zoom_start=5, tiles="Stamen Terrain")
 
-volcanoes = pandas.read_csv("../materials/Volcanoes.txt")
-volcano_markers = folium.FeatureGroup(name="Volcanoes")
+volcano_data = pandas.read_csv("../materials/Volcanoes.txt")
 
 template = """
 <h5>Volcano&nbsp;Information</h5>
@@ -43,13 +42,15 @@ def population_color(population_count):
     return color
 
 
-for index, volcano in volcanoes.iterrows():
+volcanoes = folium.FeatureGroup(name="Volcanoes")
+
+for index, volcano in volcano_data.iterrows():
     name = volcano["NAME"]
     elevation = volcano["ELEV"]
     v_type = volcano["TYPE"]
     location = (volcano["LAT"], volcano["LON"])
 
-    volcano_markers.add_child(
+    volcanoes.add_child(
         folium.CircleMarker(location=location,
                             popup=template % (name.replace(" ", "&nbsp;"), elevation, v_type, name),
                             fill=True,
@@ -69,6 +70,7 @@ with open("../materials/world.json", mode="r", encoding="utf-8-sig") as world:
         }))
 
 folium_map.add_child(population)
-folium_map.add_child(volcano_markers)
+folium_map.add_child(volcanoes)
+folium_map.add_child(folium.LayerControl())
 
 folium_map.save("../output/map.html")
