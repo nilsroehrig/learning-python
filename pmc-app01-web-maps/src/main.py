@@ -4,7 +4,7 @@ import pandas
 folium_map = folium.Map(location=(41.08961985883916, -112.0000093626548), zoom_start=5, tiles="Stamen Terrain")
 
 volcanoes = pandas.read_csv("../materials/Volcanoes.txt")
-feature_group = folium.FeatureGroup(name="Bunch of Markers")
+volcano_markers = folium.FeatureGroup(name="Volcanoes")
 
 template = """
 <h5>Volcano&nbsp;Information</h5>
@@ -34,7 +34,7 @@ for index, volcano in volcanoes.iterrows():
     v_type = volcano["TYPE"]
     location = (volcano["LAT"], volcano["LON"])
 
-    feature_group.add_child(
+    volcano_markers.add_child(
         folium.CircleMarker(location=location,
                             popup=template % (name.replace(" ", "&nbsp;"), elevation, v_type, name),
                             fill=True,
@@ -44,6 +44,12 @@ for index, volcano in volcanoes.iterrows():
                             radius=8,
                             weight=2))
 
-folium_map.add_child(feature_group)
+population = folium.FeatureGroup(name="Population")
+
+with open("../materials/world.json", mode="r", encoding="utf-8-sig") as world:
+    population.add_child(folium.GeoJson(world.read()))
+
+folium_map.add_child(population)
+folium_map.add_child(volcano_markers)
 
 folium_map.save("../output/map.html")
