@@ -7,7 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/materials" />
       <excludeFolder url="file://$MODULE_DIR$/output" />
     </content>
-    <orderEntry type="jdk" jdkName="python-beginners (Python 3.9)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.11 (python-beginners)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
