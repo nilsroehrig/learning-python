@@ -50,7 +50,7 @@ timespan_dataframe = pandas.DataFrame()
 timespan_dataframe["start"] = [start for start, _ in timespans]
 timespan_dataframe["end"] = [end for _, end in timespans]
 
-timespan_dataframe.to_csv("Times.csv")
+timespan_dataframe.to_csv("../output/Times.csv")
 
 video.release()
 cv2.destroyAllWindows()

@@ -17,5 +17,5 @@ plot.add_tools(hover)
 
 quad = plot.quad(left="start", right="end", bottom=0, top=1, color="green", source=cds)
 
-output_file("graph.html")
+output_file("../output/graph.html")
 show(plot)
