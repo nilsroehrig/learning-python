@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flasky McFlaskFace</title>
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>Python Portflaskio</h1>
+        <nav>
+            <ul class="menu">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="container">
+    {%block content%}
+    {%endblock%}
+</div>
+</body>
+</html>
