@@ -22,8 +22,9 @@ def insert(item, quantity, price):
 create_store_table()
 
 
-# insert("Coke Glass", 6, 7.99)
-# insert("Water Bottle", 12, 9.99)
+insert("Wine Glass", 10, 5.99)
+insert("Coke Glass", 6, 7.99)
+insert("Water Bottle", 12, 9.99)
 
 
 def view():
@@ -33,5 +34,26 @@ def view():
 
     return with_db(fn)
 
+
+def remove(item):
+    return with_db(lambda cursor: cursor.execute("DELETE FROM store WHERE item=?", (item,)))
+
+
+def update(item, quantity, price):
+    return with_db(
+        lambda cursor: cursor.execute("UPDATE store SET quantity=?, price=? WHERE item=?", (quantity, price, item)))
+
+print(view())
+
+print(remove("Water Bottle"))
+
+print(view())
+
+update("Coke Glass", 10, 6.99)
+
+print(view())
+
+remove("Coke Glass")
+remove("Wine Glass")
 
 print(view())
