@@ -27,8 +27,12 @@ def remove_book(isbn):
     return with_db(lambda cur: cur.execute("DELETE FROM books WHERE isbn=?", (isbn,)))
 
 
+def get_all_books():
+    return with_db(lambda cur: cur.execute("SELECT * from books").fetchall())
+
+
 # def get_by_title(title):
 #     return with_db(lambda cur: cur.execute("SELECT * FROM books WHERE title=?", (title,)))
 
 init_database()
-remove_book(123456789)
+print(get_all_books())
