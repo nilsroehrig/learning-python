@@ -31,8 +31,33 @@ def get_all_books():
     return with_db(lambda cur: cur.execute("SELECT * from books").fetchall())
 
 
-# def get_by_title(title):
-#     return with_db(lambda cur: cur.execute("SELECT * FROM books WHERE title=?", (title,)))
+def find_books(title, author, year, isbn):
+    if isbn is not None:
+        return with_db(lambda cur: cur.execute("SELECT * from books WHERE isbn=?", (isbn,)).fetchall())
+
+    if all(v is None for v in (title, author, year)):
+        return []
+
+    query_values = ()
+    query_conditions = ()
+
+    if title is not None:
+        query_values += (title,)
+        query_conditions += ("title=?",)
+
+    if author is not None:
+        query_values += (author,)
+        query_conditions += ("author=?",)
+
+    if year is not None:
+        query_values += (year,)
+        query_conditions += ("year=?",)
+
+    condition_string = " AND ".join(query_conditions)
+    query = "SELECT * from books WHERE %s" % condition_string
+
+    return with_db(lambda cur: cur.execute(query, query_values).fetchall())
+
 
 init_database()
-print(get_all_books())
+
