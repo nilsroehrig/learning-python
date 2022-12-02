@@ -1,0 +1,13 @@
+version: "3.3"
+services:
+  db:
+    image: postgis/postgis:15-3.3
+    restart: "no"
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_USER: python
+      POSTGRES_DB: python
+    ports:
+      - '5432:5432'
+    expose:
+      - '5432'
