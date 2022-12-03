@@ -60,4 +60,3 @@ def find_books(title, author, year, isbn):
 
 
 init_database()
-
