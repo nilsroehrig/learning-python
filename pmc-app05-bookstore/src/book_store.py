@@ -1,6 +1,6 @@
 from tkinter import *
 
-from book_operations import get_all_books, create_book
+from book_operations import get_all_books, create_book, update_book
 
 
 def all_set():
@@ -8,10 +8,10 @@ def all_set():
 
 
 def isbn_known():
-    return var_isbn.get() in [isbn for _, _, _, isbn in var_books.get()]
+    return int(var_isbn.get()) in [isbn for _, _, _, isbn in var_books.get()]
 
 
-def load_book():
+def handle_load():
     if len(lst_books.curselection()) == 0:
         return
 
@@ -23,14 +23,30 @@ def load_book():
     var_isbn.set(isbn)
 
 
-def add_book():
+def get_book_entry_values():
+    return var_title.get(), var_author.get(), var_year.get(), var_isbn.get()
+
+
+def handle_add():
     if not all_set():
         return
 
     if isbn_known():
         return
 
-    create_book(var_title.get(), var_author.get(), var_year.get(), var_isbn.get())
+    create_book(*get_book_entry_values())
+
+    var_books.set(get_all_books())
+
+
+def handle_update():
+    if not all_set():
+        return
+
+    if not isbn_known():
+        return
+
+    update_book(*get_book_entry_values())
 
     var_books.set(get_all_books())
 
@@ -54,15 +70,15 @@ lbl_isbn = Label(book_store, text="ISBN")
 var_isbn = StringVar()
 ent_isbn = Entry(book_store, textvariable=var_isbn)
 
-btn_add = Button(book_store, text="Add Book", command=add_book)
-btn_update = Button(book_store, text="Update Book")
+btn_add = Button(book_store, text="Add Book", command=handle_add)
+btn_update = Button(book_store, text="Update Book", command=handle_update)
 btn_search = Button(book_store, text="Search Book")
 btn_quit = Button(book_store, text="Quit", command=book_store.quit)
 
 var_books = Variable(value=get_all_books())
 lst_books = Listbox(book_store, height=10, listvariable=var_books)
 
-btn_load = Button(book_store, text="Load Selected", command=load_book)
+btn_load = Button(book_store, text="Load Selected", command=handle_load)
 btn_delete = Button(book_store, text="Delete selected")
 
 lbl_title.grid(row=0, column=0, padx=5, pady=5, sticky="w")
