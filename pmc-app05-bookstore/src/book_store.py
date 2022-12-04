@@ -1,6 +1,12 @@
 from tkinter import *
 
-from book_operations import get_all_books, create_book, update_book
+from book_operations import get_all_books, create_book, update_book, find_books
+
+search_result_shown = False
+
+
+def strtonone(s):
+    return None if len(s) <= 0 else s
 
 
 def all_set():
@@ -49,6 +55,17 @@ def handle_update():
     update_book(*get_book_entry_values())
 
     var_books.set(get_all_books())
+    lst_books.update()
+
+
+def handle_search():
+    result = find_books(*[strtonone(s) for s in get_book_entry_values()])
+    if len(result) > 0:
+        var_books.set(result)
+
+
+def handle_clear():
+    var_books.set(get_all_books())
 
 
 book_store = Tk()
@@ -72,12 +89,13 @@ ent_isbn = Entry(book_store, textvariable=var_isbn)
 
 btn_add = Button(book_store, text="Add Book", command=handle_add)
 btn_update = Button(book_store, text="Update Book", command=handle_update)
-btn_search = Button(book_store, text="Search Book")
-btn_quit = Button(book_store, text="Quit", command=book_store.quit)
+btn_search = Button(book_store, text="Search Books", command=handle_search)
+btn_clear = Button(book_store, text="Clear Search", command=handle_clear)
 
 var_books = Variable(value=get_all_books())
 lst_books = Listbox(book_store, height=10, listvariable=var_books)
 
+btn_quit = Button(book_store, text="Quit", command=book_store.quit)
 btn_load = Button(book_store, text="Load Selected", command=handle_load)
 btn_delete = Button(book_store, text="Delete selected")
 
@@ -96,10 +114,11 @@ ent_isbn.grid(row=3, column=1, padx=5, pady=5, sticky=W + E)
 btn_add.grid(row=0, column=2, padx=5, pady=5, sticky=W + E)
 btn_update.grid(row=1, column=2, padx=5, pady=5, sticky=W + E)
 btn_search.grid(row=2, column=2, padx=5, pady=5, sticky=W + E)
-btn_quit.grid(row=3, column=2, padx=5, pady=5, sticky=W + E)
+btn_clear.grid(row=3, column=2, padx=5, pady=5, sticky=W + E)
 
 lst_books.grid(row=4, column=0, columnspan=3, padx=5, pady=5, sticky=W + E)
 
+btn_quit.grid(row=5, column=0, padx=5, pady=5, sticky=W + E)
 btn_load.grid(row=5, column=1, padx=5, pady=5, sticky=W + E)
 btn_delete.grid(row=5, column=2, padx=5, pady=5, sticky=W + E)
 

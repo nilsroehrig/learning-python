@@ -43,20 +43,20 @@ def find_books(title, author, year, isbn):
 
     if title is not None:
         query_values += (title,)
-        query_conditions += ("title=?",)
+        query_conditions += ("title LIKE ?",)
 
     if author is not None:
         query_values += (author,)
-        query_conditions += ("author=?",)
+        query_conditions += ("author LIKE ?",)
 
     if year is not None:
         query_values += (year,)
-        query_conditions += ("year=?",)
+        query_conditions += ("year LIKE ?",)
 
     condition_string = " AND ".join(query_conditions)
     query = "SELECT * from books WHERE %s" % condition_string
 
-    return with_db(lambda cur: cur.execute(query, query_values).fetchall())
+    return with_db(lambda cur: cur.execute(query, ["%" + s + "%" for s in query_values]).fetchall())
 
 
 init_database()
