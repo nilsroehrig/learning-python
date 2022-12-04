@@ -1,6 +1,6 @@
 from tkinter import *
 
-from book_operations import get_all_books, create_book, update_book, find_books
+from book_operations import get_all_books, create_book, update_book, find_books, remove_book
 
 search_result_shown = False
 
@@ -68,6 +68,16 @@ def handle_clear():
     var_books.set(get_all_books())
 
 
+def handle_delete():
+    if len(lst_books.curselection()) == 0:
+        return
+
+    _, _, _, isbn = lst_books.get(lst_books.curselection())
+
+    remove_book(isbn)
+    var_books.set(get_all_books())
+
+
 book_store = Tk()
 book_store.title("Book Store")
 
@@ -97,7 +107,7 @@ lst_books = Listbox(book_store, height=10, listvariable=var_books)
 
 btn_quit = Button(book_store, text="Quit", command=book_store.quit)
 btn_load = Button(book_store, text="Load Selected", command=handle_load)
-btn_delete = Button(book_store, text="Delete selected")
+btn_delete = Button(book_store, text="Delete selected", command=handle_delete)
 
 lbl_title.grid(row=0, column=0, padx=5, pady=5, sticky="w")
 ent_title.grid(row=0, column=1, padx=5, pady=5, sticky=W + E)
